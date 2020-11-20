@@ -80,7 +80,7 @@ Estas regras são eliminatórias e o não cumprimento desclassifica o candidato.
 
 A prova poderá ser entregue até:
 
-**08/11/2020 às 23:59:59**
+**23/11/2020 às 23:59:59**
 
 ## Como entregar a prova
 
