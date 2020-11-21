@@ -13,4 +13,14 @@ class Match extends Model
         'start_time',
         'end_time',
     ];
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class);
+    }
+
+    public function cards()
+    {
+        return $this->belongsToMany(Card::class);
+    }
 }

@@ -15,8 +15,14 @@ class AddDatasToCards extends Migration
     {
         Card::insert(
             [
-                ['name' => 'Red',    'points' => 2], 
-                ['name' => 'Yellow', 'points' => 1]
+                [
+                    'name'   => 'Yellow', 
+                    'points' => 1
+                ],
+                [
+                    'name'   => 'Red',    
+                    'points' => 2
+                ],
             ]
         );
     }
