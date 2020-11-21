@@ -13,7 +13,7 @@ class PlayerController extends Controller
     {
         return response()->json(
             [
-                'allPlayers'=> new PlayerResourceCollection(Player::all())
+                'players' => new PlayerResourceCollection(Player::all()->load('team'))
             ],200);
     }
 
@@ -26,7 +26,7 @@ class PlayerController extends Controller
     public function update(StorePlayerRequest $request, Player $player)
     {
         $player->update($request->validated());
-        return response()->json(new PlayerResource($player),200);
+        return response()->json(new PlayerResource($player->load('team')),200);
     }
 
 }

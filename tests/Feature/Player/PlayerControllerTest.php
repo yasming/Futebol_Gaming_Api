@@ -29,10 +29,10 @@ class PlayerControllerTest extends TestCase
     public function test_it_shoul_be_able_to_list_all_players()
     {
         $allPlayers = new PlayerResourceCollection(Player::all()->load('team'));
-        $response   = $this->get('/api/teams', ['Authorization' => "Bearer ".$this->token])
+        $response   = $this->get('/api/players', ['Authorization' => "Bearer ".$this->token])
                            ->assertStatus(200);
-        $this->assertEquals($allPlayers->response()->getData(true)['data'],$response['allPlayers']);
-        $this->assertEquals(count($response['allPlayers']), Player::all()->count());
+        $this->assertEquals($allPlayers->response()->getData(true)['data'],$response['players']);
+        $this->assertEquals(count($response['players']), Player::all()->count());
     }
 
     public function test_it_should_be_able_to_validate_fields_to_create_a_player()

@@ -14,7 +14,6 @@ class Player extends Model
         'shirt_number',
         'team_id'
     ];
-    protected $with = ['team'];
 
     protected $hidden = [
         'updated_at',
@@ -25,5 +24,13 @@ class Player extends Model
     public function team()
     {
         return $this->belongsTo(Team::class);
+    }
+
+    public function scopeGetPlayersThatBelongsToOthersTeam($query,$value,$teamId)
+    {
+        return  $query->whereIn($value)
+                      ->where('team_id', '!=',$teamId)
+                      ->whereNotnull('team_id')
+                      ->get();
     }
 }
