@@ -14,7 +14,7 @@ class TeamController extends Controller
     {
         return response()->json(
             [
-                'teams' => new TeamResourceCollection(Team::all()->load('players'))
+                'teams' => new TeamResourceCollection(Team::all())
             ],200);
     }
 
@@ -28,7 +28,13 @@ class TeamController extends Controller
     public function update(StoreTeamRequest $request, Team $team)
     {
         $team->update($request->validated());
-        return response()->json(new TeamResource($team),200);
+        if($team->players()->count() + sizeof(request()->players_ids) > Team::MAX_NUMBER_OF_PLAYERS) 
+        {
+            return response()->json(['max_number_of_players' => Team::MESSAGE_MAX_NUMBER_OF_PLAYERS],422);
+        }
+        
+        Player::associateTeam($team->id);
+        return response()->json(new TeamResource($team->load('players')),200);
     }
 
 }
