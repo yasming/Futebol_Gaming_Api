@@ -14,9 +14,16 @@ class Player extends Model
         'shirt_number',
         'team_id'
     ];
+    protected $with = ['team'];
 
     protected $hidden = [
         'updated_at',
-        'created_at'
+        'created_at',
+        'team_id'
     ];
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }
