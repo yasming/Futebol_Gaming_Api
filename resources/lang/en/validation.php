@@ -131,8 +131,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'players_ids.*' => [ 
+            'integer' => 'Each value must be integer'
         ],
     ],
 

@@ -20,8 +20,9 @@ class StoreTeamRequest extends FormRequest
         $teamId = null;
         if($this->getMethod() == 'PUT') $teamId = request()->route('team')->id; 
         return [
-            'name'        => 'required', 
-            'players_ids' => ['array','max:5' , new CheckIfPlayersBelongsToOtherTeamRule($teamId)]
+            'name'          => 'required|string', 
+            'players_ids'   => ['bail','array','max:5' , new CheckIfPlayersBelongsToOtherTeamRule($teamId)],
+            'players_ids.*' => 'integer',
         ];
     }
 }
