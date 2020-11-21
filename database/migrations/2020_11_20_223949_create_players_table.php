@@ -18,7 +18,7 @@ class CreatePlayersTable extends Migration
             $table->string('name');
             $table->integer('document')->unique();
             $table->integer('shirt_number');
-            $table->constraints('team_id')->nullable();
+            $table->foreignId('team_id')->constraints()->nullable();
             $table->timestamps();
         });
     }

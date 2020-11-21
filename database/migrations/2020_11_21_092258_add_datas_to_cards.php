@@ -3,8 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
-class CreateCardsTable extends Migration
+use App\Models\Card;
+class AddDatasToCards extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateCardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('cards', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->integer('points');
-        });
+        Card::insert(
+            [
+                ['name' => 'Red',    'points' => 2], 
+                ['name' => 'Yellow', 'points' => 1]
+            ]
+        );
     }
 
     /**
@@ -27,6 +28,6 @@ class CreateCardsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cards');
+       Card::truncate();
     }
 }
