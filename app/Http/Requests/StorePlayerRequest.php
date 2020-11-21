@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Traits\FormatResponseFormRequest;
 
-class StorePlayer extends FormRequest
+class StorePlayerRequest extends FormRequest
 {
     use FormatResponseFormRequest;
     
@@ -16,9 +16,11 @@ class StorePlayer extends FormRequest
 
     public function rules()
     {
+        $documentRules = 'bail|required|integer|digits:11|unique:players';
+        if($this->getMethod() == 'PUT') $documentRules .= ',document,'.request()->route('player')->id; 
         return [
             'name'         => 'required|string',
-            'document'     => 'bail|required|unique:players|integer|digits:11',
+            'document'     => $documentRules,
             'shirt_number' => 'required|integer',
         ];
     }

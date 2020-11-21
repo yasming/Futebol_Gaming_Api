@@ -15,12 +15,15 @@ class PlayerControllerTest extends TestCase
     {
         parent::setUp();
         $this->seed();
-        // $this->withExceptionHandling();
+        $this->withExceptionHandling();
         $response = $this->post('/api/login', [
             'email'    => 'email@example.com', 
             'password' => 'password'
         ])->assertStatus(200);
         $this->token = $response['token'];
+
+        $randNumber = rand ( 10000000000 , 99999999999 );
+        Player::first()->update(['document' => $randNumber]);
     }
     
     public function test_it_should_be_able_to_validate_fields_to_create_a_player()
@@ -33,6 +36,7 @@ class PlayerControllerTest extends TestCase
                             'document'     => ['The document field is required.'],
                             'shirt_number' => ['The shirt number field is required.'],
                           ]);
+
         $this->withHeaders(['Authorization' => "Bearer ".$this->token])
              ->json('POST', '/api/players',[
                                             'name'         => ['test'],
@@ -88,6 +92,75 @@ class PlayerControllerTest extends TestCase
                                         'shirt_number' => 12,
                                         'id'           => $response['id']
                                   ]);
+    }
+
+    public function test_it_should_be_able_to_validate_fields_to_update_a_player()
+    {
+        $this->withHeaders(['Authorization' => "Bearer ".$this->token])
+             ->json('PUT', '/api/players/1')
+             ->assertStatus(422)
+             ->assertExactJson([
+                            'name'         => ['The name field is required.'],
+                            'document'     => ['The document field is required.'],
+                            'shirt_number' => ['The shirt number field is required.'],
+                          ]);
+                 
+        $randNumber = rand ( 10000000000 , 99999999999 );
+        Player::all()->where('id','!=',1)->random()->update(['document' => $randNumber]);
+        $this->withHeaders(['Authorization' => "Bearer ".$this->token])
+             ->json('PUT', '/api/players/1',[
+                                            'name'         => ['test'],
+                                            'document'     => $randNumber, 
+                                            'shirt_number' => ['test'],
+
+                                        ])
+             ->assertStatus(422)
+             ->assertExactJson([
+                                    'name'         => ['The name must be a string.'],
+                                    'document'     => ['The document has already been taken.'],
+                                    'shirt_number' => ['The shirt number must be an integer.'],
+                              ]);
+
+        $this->withHeaders(['Authorization' => "Bearer ".$this->token])
+             ->json('PUT', '/api/players/1',[
+                                                'name'         => 'test',
+                                                'document'     => ['test'], 
+                                                'shirt_number' => 123,
+                                           ])
+             ->assertStatus(422)
+             ->assertExactJson([
+                                    'document' => ['The document must be an integer.'],
+                              ]);
+
+        $this->withHeaders(['Authorization' => "Bearer ".$this->token])
+             ->json('PUT', '/api/players/1',[
+                                                'name'         => 'test',
+                                                'document'     => rand(99,9999), 
+                                                'shirt_number' => 123,
+                                           ])
+             ->assertStatus(422)
+             ->assertExactJson([
+                                    'document' => ['The document must be 11 digits.'],
+                              ]);
+    }
+
+    public function test_it_should_be_able_to_able_to_update_a_player()
+    {
+        $firstPlayer = Player::first();
+        $this->withHeaders(['Authorization' => "Bearer ".$this->token])
+             ->json('PUT', '/api/players/1',[
+                                                'name'         => 'test 2',
+                                                'document'     => $firstPlayer->document,
+                                                'shirt_number' => 14,
+                                           ])
+             ->assertStatus(200)
+             ->assertExactJson([
+                          'name'         => 'test 2',
+                          'document'     => $firstPlayer->document,
+                          'shirt_number' => 14,
+                          'team_id'      => $firstPlayer->team_id,
+                          'id'           => 1
+                    ]);
     }
 
 }
