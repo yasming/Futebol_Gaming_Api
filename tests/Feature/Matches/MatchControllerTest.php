@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\matches;
+namespace Tests\Feature\Matches;
 
 use Tests\TestCase;
 use App\Models\match;

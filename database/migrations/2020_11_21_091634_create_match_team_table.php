@@ -18,7 +18,6 @@ class CreateMatchTeamTable extends Migration
             $table->foreignId('team_id')->constraints();
             $table->foreignId('match_id')->constraints();
             $table->smallInteger('gols');
-            $table->timestamps();
         });
     }
 
