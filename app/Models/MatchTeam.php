@@ -10,7 +10,7 @@ class MatchTeam extends Model
     use HasFactory;
     protected $table = 'match_team';
 
-    public function scopeGetRankingTeams($query,$teamName)
+    public function scopeGetRankingTeams($query,$teamName = null)
     {
         return  $query->groupBy('team_id')
                       ->when($teamName,function($query) use ($teamName){

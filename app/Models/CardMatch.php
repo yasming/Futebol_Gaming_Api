@@ -10,7 +10,7 @@ class CardMatch extends Model
     use HasFactory;
     protected $table = 'card_match';
 
-    public function scopeGetRankingPlayers($query, $playerName)
+    public function scopeGetRankingPlayers($query, $playerName = null)
     {
         return  $query->groupBy('player_id')
                       ->when($playerName,function($query) use ($playerName){

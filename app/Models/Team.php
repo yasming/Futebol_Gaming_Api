@@ -26,7 +26,7 @@ class Team extends Model
         return $this->hasMany(Player::class);
     }
 
-    public function scopeGetAllTeamsWithPlayers($query,$teamName)
+    public function scopeGetAllTeamsWithPlayers($query,$teamName = null)
     {
         return  $query->when($teamName,function($query) use ($teamName){
                     return $query->where('name','like','%'.$teamName.'%');

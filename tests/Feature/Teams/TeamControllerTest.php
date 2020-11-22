@@ -27,11 +27,21 @@ class TeamControllerTest extends TestCase
     
     public function test_it_shoul_be_able_to_list_all_teams()
     {
-        $allTeams = new TeamResourceCollection(Team::all()->load('players'));
-        $response   = $this->get('/api/teams', ['Authorization' => "Bearer ".$this->token])
-                           ->assertStatus(200);
+        $allTeams = new TeamResourceCollection(Team::getAllTeamsWithPlayers());
+        $response = $this->get('/api/teams', ['Authorization' => "Bearer ".$this->token])
+                         ->assertStatus(200);
         $this->assertEquals($allTeams->response()->getData(true)['data'],$response['teams']);
         $this->assertEquals(count($response['teams']), Team::all()->count());
+    }
+
+    public function test_it_shoul_be_able_to_search_a_team()
+    {
+        $team     = Team::first();
+        $allTeams = new TeamResourceCollection(Team::getAllTeamsWithPlayers($team->name));
+        $response = $this->get('/api/teams?name='.$team->name, ['Authorization' => "Bearer ".$this->token])
+                         ->assertStatus(200);
+        $this->assertEquals($allTeams->response()->getData(true)['data'],$response['teams']);
+        $this->assertEquals(count($response['teams']), 1);
     }
 
     public function test_it_should_be_able_to_validate_fields_to_create_a_team()

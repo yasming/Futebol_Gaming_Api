@@ -26,14 +26,14 @@ class Player extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function scopeGetAllPlayersWithTeam($query,$playerName)
+    public function scopeGetAllPlayersWithTeam($query,$playerName = null)
     {
         return  $query->when($playerName,function($query) use ($playerName){
                         return $query->where('name','like','%'.$playerName.'%');
                       })->with('team')
                         ->get();
     }
-    
+
     public function scopeGetPlayersThatBelongsToOthersTeam($query,$value,$teamId)
     {
         return  $query->whereIn('id', $value)

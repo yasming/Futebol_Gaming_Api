@@ -28,11 +28,21 @@ class PlayerControllerTest extends TestCase
     
     public function test_it_shoul_be_able_to_list_all_players()
     {
-        $allPlayers = new PlayerResourceCollection(Player::all()->load('team'));
-        $response   = $this->get('/api/players', ['Authorization' => "Bearer ".$this->token])
-                           ->assertStatus(200);
-        $this->assertEquals($allPlayers->response()->getData(true)['data'],$response['players']);
-        $this->assertEquals(count($response['players']), Player::all()->count());
+          $allPlayers = new PlayerResourceCollection(Player::getAllPlayersWithTeam());
+          $response   = $this->get('/api/players', ['Authorization' => "Bearer ".$this->token])
+                             ->assertStatus(200);
+          $this->assertEquals($allPlayers->response()->getData(true)['data'],$response['players']);
+          $this->assertEquals(count($response['players']), Player::all()->count());
+    }
+
+    public function test_it_shoul_be_able_to_search_a_player()
+    {
+          $player = Player::first();
+          $allPlayers = new PlayerResourceCollection(Player::getAllPlayersWithTeam($player->name));
+          $response   = $this->get('/api/players?name='.$player->name, ['Authorization' => "Bearer ".$this->token])
+                             ->assertStatus(200);
+          $this->assertEquals($allPlayers->response()->getData(true)['data'],$response['players']);
+          $this->assertEquals(count($response['players']), 1);
     }
 
     public function test_it_should_be_able_to_validate_fields_to_create_a_player()
