@@ -175,7 +175,7 @@ class TeamControllerTest extends TestCase
                               ]);
     }
 
-    public function test_it_should_be_able_to_able_to_update_a_team()
+    public function test_it_should_be_able_update_a_team()
     {
         Player::whereIn('id',[1,2])->update(['team_id' => 1]);
         Player::whereNotIn('id',[1,2])->update(['team_id' => NULL]);

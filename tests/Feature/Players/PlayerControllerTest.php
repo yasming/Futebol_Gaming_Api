@@ -153,7 +153,7 @@ class PlayerControllerTest extends TestCase
                               ]);
     }
 
-    public function test_it_should_be_able_to_able_to_update_a_player()
+    public function test_it_should_be_able_to_update_a_player()
     {
         $firstPlayer = Player::first();
         $this->withHeaders(['Authorization' => "Bearer ".$this->token])

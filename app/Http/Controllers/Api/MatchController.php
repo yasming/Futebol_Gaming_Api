@@ -11,40 +11,48 @@ class MatchController extends Controller
     public function store(StoreMatchRequest $request)
     {
         $match = Match::create($request->validated());
-        $this->attachTeamsAndGols($match);
-        $this->attachCards($match);
+        $this->syncTeamsAndGols($match);
+        $this->syncCards($match,);
 
         return response()->json(new MatchResource($match->load(['teams','cards'])),201);
     }
 
-    public function update(StoreMatchRequest $request, Team $team)
+    public function update(StoreMatchRequest $request, Match $match)
     {
-        $team->update($request->validated());
-        return response()->json(new MatchResource($team->load('players')),200);
+        $match->update($request->validated());
+        $this->syncTeamsAndGols($match);
+        $this->syncCards($match);
+        return response()->json(new MatchResource($match->load(['teams','cards'])),200);
     }
 
-    private function attachTeamsAndGols($match): void
+    private function syncTeamsAndGols($match): void
     {
+        $teamsArray = [];
         foreach(request()->match_results as $match_result)
         {
-            $match->teams()->attach([$match_result['team_id'] => 
+           $teamsArray  +=  [
+                                $match_result['team_id'] => 
                                 [
                                     'gols' => $match_result['gols']
                                 ]
-                          ]);
+                            ];
         }
+        $match->teams()->sync($teamsArray);
     }
 
-    private function attachCards($match): void
+    private function syncCards($match): void
     {
+        $cardsArray = [];
         foreach(request()->match_cards as $card)
         {
-            $match->cards()->attach([$card['card_id'] => 
+            $cardsArray +=  [
+                                $card['card_id'] => 
                                 [
                                     'player_id' => $card['player_id']
                                 ]
-                          ]);
+                            ];
         }
+        $match->cards()->sync($cardsArray);
     }
 
 }
