@@ -14,26 +14,29 @@ class TeamController extends Controller
     {
         return response()->json(
             [
-                'teams' => new TeamResourceCollection(Team::all())
+                'teams' => new TeamResourceCollection(Team::all()->load('players'))
             ],200);
     }
 
     public function store(StoreTeamRequest $request)
     {
         $team = Team::create($request->validated());
-        Player::associateTeam($team->id);
+        Player::associateTeam($team->id,$request->players_ids);
         return response()->json(new TeamResource($team->load('players')),201);
     }
 
     public function update(StoreTeamRequest $request, Team $team)
     {
         $team->update($request->validated());
-        if($team->players()->count() + sizeof(request()->players_ids) > Team::MAX_NUMBER_OF_PLAYERS) 
+        $playersFromTeam      = $team->players();
+        $newPlayersToBeInsert = array_diff(request()->players_ids, $playersFromTeam->pluck('id')->toArray());
+
+        if($playersFromTeam->count() + sizeof($newPlayersToBeInsert) > Team::MAX_NUMBER_OF_PLAYERS) 
         {
             return response()->json(['max_number_of_players' => Team::MESSAGE_MAX_NUMBER_OF_PLAYERS],422);
         }
         
-        Player::associateTeam($team->id);
+        Player::associateTeam($team->id,$newPlayersToBeInsert);
         return response()->json(new TeamResource($team->load('players')),200);
     }
 

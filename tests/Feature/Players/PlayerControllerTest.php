@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Player;
+namespace Tests\Feature\Players;
 
 use Tests\TestCase;
 use App\Http\Resources\PlayerResourceCollection;

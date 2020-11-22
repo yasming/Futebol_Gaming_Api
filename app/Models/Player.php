@@ -36,9 +36,9 @@ class Player extends Model
                       ->get();
     }
 
-    public function scopeAssociateTeam($query,$teamId)
+    public function scopeAssociateTeam($query,$teamId,$playersIds)
     {
-        return $query->whereIn('id',request()->players_ids)
+        return $query->whereIn('id',$playersIds)
                      ->whereNull('team_id')
                      ->update(
                          [

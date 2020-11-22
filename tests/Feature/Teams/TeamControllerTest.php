@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Team;
+namespace Tests\Feature\Teams;
 
 use Tests\TestCase;
 use App\Http\Resources\TeamResourceCollection;
@@ -61,8 +61,8 @@ class TeamControllerTest extends TestCase
              ->assertStatus(422)
              ->assertExactJson([
                                     'players_ids'  => [
-                                        ['Each value must be integer'],
-                                        ['Each value must be integer'],
+                                        ['Player id value must be integer.'],
+                                        ['Player id value must be integer.'],
                                     ],
                               ]);
  
@@ -134,8 +134,8 @@ class TeamControllerTest extends TestCase
              ->assertStatus(422)
              ->assertExactJson([
                                     'players_ids'  => [
-                                        ['Each value must be integer'],
-                                        ['Each value must be integer'],
+                                        ['Player id value must be integer.'],
+                                        ['Player id value must be integer.'],
                                     ],
                               ]);
  

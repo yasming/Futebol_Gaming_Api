@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Match;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class MatchFactory extends Factory
 {
@@ -23,7 +23,7 @@ class MatchFactory extends Factory
     public function definition()
     {
         return [
-            'date'       => $this->faker->date,
+            'date'       => Carbon::parse($this->faker->date)->format('d/m/Y'),
             'start_time' => $this->faker->time,
             'end_time'   => $this->faker->time,
         ];
