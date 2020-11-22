@@ -135,7 +135,7 @@ return [
             'integer' => 'The players ids value must be integer.'
         ],
         'match_results.*.team_id' => [ 
-            'distinct' => 'The teams id value needs to be unique.'
+            'distinct' => 'The team id value needs to be unique.'
         ],
         'match_results.*.gols' => [ 
             'integer' => 'The gols value must be integer.'

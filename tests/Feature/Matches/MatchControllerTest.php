@@ -129,10 +129,10 @@ class MatchControllerTest extends TestCase
              ->assertExactJson([
                                     'match_results' => [
                                             [
-                                                'team_id' => ['The teams id value needs to be unique.']
+                                                'team_id' => ['The team id value needs to be unique.']
                                             ],
                                             [
-                                                'team_id' => ['The teams id value needs to be unique.']
+                                                'team_id' => ['The team id value needs to be unique.']
                                             ]
                                         ],
                               ]);
@@ -213,14 +213,14 @@ class MatchControllerTest extends TestCase
              ->assertExactJson([
                                     'match_cards' => [
                                         [
-                                            'card_id' => ['The card id value must be integer.'],
+                                            'card_id'   => ['The card id value must be integer.'],
                                             'player_id' => ['The player id value must be integer.']
                                         ],
                                     ],
                               ]);  
     }
 
-    public function test_it_should_be_able_to_able_to_create_a_match()
+    public function test_it_should_be_able_to_create_a_match()
     {
         $response   = $this->withHeaders(['Authorization' => "Bearer ".$this->token])
                            ->json('POST', '/api/matches',[
@@ -368,10 +368,10 @@ class MatchControllerTest extends TestCase
             ->assertExactJson([
                                    'match_results' => [
                                            [
-                                               'team_id' => ['The teams id value needs to be unique.']
+                                               'team_id' => ['The team id value needs to be unique.']
                                            ],
                                            [
-                                               'team_id' => ['The teams id value needs to be unique.']
+                                               'team_id' => ['The team id value needs to be unique.']
                                            ]
                                     ],
                              ]);
