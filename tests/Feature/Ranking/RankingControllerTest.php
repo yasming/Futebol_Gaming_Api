@@ -35,7 +35,7 @@ class RankingControllerTest extends TestCase
     public function test_it_should_be_able_to_list_ranking_of_teams()
     {
         $rankingTeams = new RankingResourceCollection(MatchTeam::getRankingTeams());
-        $response     = $this->get('/api/ranking-teams', ['Authorization' => "Bearer ".$this->token])
+        $response     = $this->get('/api/ranking/teams', ['Authorization' => "Bearer ".$this->token])
                              ->assertStatus(200);
         $this->assertEquals($rankingTeams->response()->getData(true)['data'],$response['ranking']);
     }
@@ -43,7 +43,7 @@ class RankingControllerTest extends TestCase
     public function test_it_shoul_be_able_to_search_a_team_in_the_ranking()
     {
         $rankingTeams = new RankingResourceCollection(MatchTeam::getRankingTeams($this->team->name));
-        $response     = $this->get('/api/ranking-teams?name='.$this->team->name, ['Authorization' => "Bearer ".$this->token])
+        $response     = $this->get('/api/ranking/teams?name='.$this->team->name, ['Authorization' => "Bearer ".$this->token])
                              ->assertStatus(200);
 
         $this->assertEquals($rankingTeams->response()->getData(true)['data'],$response['ranking']);
@@ -53,7 +53,7 @@ class RankingControllerTest extends TestCase
     public function test_it_should_be_able_to_list_ranking_of_players()
     {
         $rankingTeams = new RankingResourceCollection(CardMatch::getRankingPlayers());
-        $response     = $this->get('/api/ranking-players', ['Authorization' => "Bearer ".$this->token])
+        $response     = $this->get('/api/ranking/players', ['Authorization' => "Bearer ".$this->token])
                              ->assertStatus(200);
 
         $this->assertEquals($rankingTeams->response()->getData(true)['data'],$response['ranking']);
@@ -62,7 +62,7 @@ class RankingControllerTest extends TestCase
     public function test_it_should_be_able_to_search_a_player_in_the_ranking()
     {
         $rankingTeams = new RankingResourceCollection(CardMatch::getRankingPlayers($this->player->name));
-        $response     = $this->get('/api/ranking-players?name='.$this->player->name, ['Authorization' => "Bearer ".$this->token])
+        $response     = $this->get('/api/ranking/players?name='.$this->player->name, ['Authorization' => "Bearer ".$this->token])
                              ->assertStatus(200);
 
         $this->assertEquals($rankingTeams->response()->getData(true)['data'],$response['ranking']);

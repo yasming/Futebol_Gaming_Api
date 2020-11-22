@@ -11,10 +11,10 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::resource('players', PlayerController::class)->only('store','update','index');
     Route::resource('teams', TeamController::class)->only('store','update','index');
     Route::resource('matches', MatchController::class)->only('store','update');
-    
-    Route::group(['as' => 'ranking.'], function(){
-        Route::get('/ranking-teams', [RankingController::class, 'getRankingTeams'])->name('teams');
-        Route::get('/ranking-players', [RankingController::class, 'getRankingPlayers'])->name('players');
+
+    Route::group(['prefix' => 'ranking','as' => 'ranking.'], function(){
+        Route::get('/teams', [RankingController::class, 'getRankingTeams'])->name('teams');
+        Route::get('/players', [RankingController::class, 'getRankingPlayers'])->name('players');
     });
 });
 

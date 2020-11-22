@@ -36,8 +36,8 @@ class PlayerModelTest extends TestCase
 
         $this->assertEquals(count($players),2);
 
-        Player::first()->update(['team_id' => 2]);
-
+        $this->player->update(['team_id' => 2]);
+        Player::whereId(2)->first()->update(['team_id' => 1]);
         $players  = Player::getPlayersThatBelongsToOthersTeam([1,2],2);
 
         $this->assertEquals(count($players),1);
