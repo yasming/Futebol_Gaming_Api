@@ -71,8 +71,8 @@ class TeamControllerTest extends TestCase
              ->assertStatus(422)
              ->assertExactJson([
                                     'players_ids'  => [
-                                        ['Player id value must be integer.'],
-                                        ['Player id value must be integer.'],
+                                        ['The players ids value must be integer.'],
+                                        ['The players ids value must be integer.'],
                                     ],
                               ]);
  
@@ -144,8 +144,8 @@ class TeamControllerTest extends TestCase
              ->assertStatus(422)
              ->assertExactJson([
                                     'players_ids'  => [
-                                        ['Player id value must be integer.'],
-                                        ['Player id value must be integer.'],
+                                        ['The players ids value must be integer.'],
+                                        ['The players ids value must be integer.'],
                                     ],
                               ]);
  
