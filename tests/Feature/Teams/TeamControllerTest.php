@@ -12,6 +12,7 @@ class TeamControllerTest extends TestCase
     use DatabaseMigrations;
 
     private $token;
+    private $team;
     public function setUp(): void
     {
         parent::setUp();
@@ -22,7 +23,8 @@ class TeamControllerTest extends TestCase
             'password' => 'password'
         ])->assertStatus(200);
         $this->token = $response['token'];
-
+        $this->team     = Team::first();
+        $this->team->update(['name' => 'test']);
     }
     
     public function test_it_shoul_be_able_to_list_all_teams()
@@ -36,9 +38,9 @@ class TeamControllerTest extends TestCase
 
     public function test_it_shoul_be_able_to_search_a_team()
     {
-        $team     = Team::first();
-        $allTeams = new TeamResourceCollection(Team::getAllTeamsWithPlayers($team->name));
-        $response = $this->get('/api/teams?name='.$team->name, ['Authorization' => "Bearer ".$this->token])
+        
+        $allTeams = new TeamResourceCollection(Team::getAllTeamsWithPlayers($this->team->name));
+        $response = $this->get('/api/teams?name='.$this->team->name, ['Authorization' => "Bearer ".$this->token])
                          ->assertStatus(200);
         $this->assertEquals($allTeams->response()->getData(true)['data'],$response['teams']);
         $this->assertEquals(count($response['teams']), 1);

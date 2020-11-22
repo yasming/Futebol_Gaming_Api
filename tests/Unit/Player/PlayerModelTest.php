@@ -10,19 +10,21 @@ class PlayerModelTest extends TestCase
 {
     use DatabaseMigrations;
 
+    private $player;
     public function setUp(): void
     {
         parent::setUp();
         $this->seed();
+        $this->player = Player::first();
+        $this->player->update(['name' => 'test']);
     }
     
     public function test_get_all_players_with_teams()
     {
-        $player   = Player::first();
-        $players  = Player::getAllPlayersWithTeam($player->name);
+        $players  = Player::getAllPlayersWithTeam($this->player->name);
 
         $this->assertEquals(count($players),1);
-        $this->assertEquals($players->first()->name,$player->name);
+        $this->assertEquals($players->first()->name,$this->player->name);
 
         $players  = Player::getAllPlayersWithTeam();
         $this->assertEquals(count($players), count(Player::all()));

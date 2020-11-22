@@ -11,19 +11,21 @@ class PlayerControllerTest extends TestCase
     use DatabaseMigrations;
 
     private $token;
+    private $player;
     public function setUp(): void
     {
-        parent::setUp();
-        $this->seed();
-        $this->withExceptionHandling();
-        $response = $this->post('/api/login', [
-            'email'    => 'email@example.com', 
-            'password' => 'password'
-        ])->assertStatus(200);
-        $this->token = $response['token'];
+          parent::setUp();
+          $this->seed();
+          $this->withExceptionHandling();
+          $response = $this->post('/api/login', [
+              'email'    => 'email@example.com', 
+              'password' => 'password'
+          ])->assertStatus(200);
+          $this->token = $response['token'];
 
-        $randNumber = rand ( 10000000000 , 99999999999 );
-        Player::first()->update(['document' => $randNumber]);
+          $randNumber = rand ( 10000000000 , 99999999999 );
+          $this->player = Player::first();
+          $this->player->update(['document' => $randNumber,'name' => 'test']);
     }
     
     public function test_it_shoul_be_able_to_list_all_players()
@@ -35,12 +37,12 @@ class PlayerControllerTest extends TestCase
           $this->assertEquals(count($response['players']), Player::all()->count());
     }
 
-    public function test_it_shoul_be_able_to_search_a_player()
+    public function test_it_should_be_able_to_search_a_player()
     {
-          $player = Player::first();
-          $allPlayers = new PlayerResourceCollection(Player::getAllPlayersWithTeam($player->name));
-          $response   = $this->get('/api/players?name='.$player->name, ['Authorization' => "Bearer ".$this->token])
+          $allPlayers = new PlayerResourceCollection(Player::getAllPlayersWithTeam($this->player->name));
+          $response   = $this->get('/api/players?name='.$this->player->name, ['Authorization' => "Bearer ".$this->token])
                              ->assertStatus(200);
+                             
           $this->assertEquals($allPlayers->response()->getData(true)['data'],$response['players']);
           $this->assertEquals(count($response['players']), 1);
     }
@@ -59,7 +61,7 @@ class PlayerControllerTest extends TestCase
         $this->withHeaders(['Authorization' => "Bearer ".$this->token])
              ->json('POST', '/api/players',[
                                             'name'         => ['test'],
-                                            'document'     => Player::first()->document, 
+                                            'document'     => $this->player->document, 
                                             'shirt_number' => ['test'],
 
                                         ])
@@ -165,19 +167,18 @@ class PlayerControllerTest extends TestCase
 
     public function test_it_should_be_able_to_update_a_player()
     {
-        $firstPlayer = Player::first();
         $this->withHeaders(['Authorization' => "Bearer ".$this->token])
              ->json('PUT', '/api/players/1',[
                                                 'name'         => 'test 2',
-                                                'document'     => $firstPlayer->document,
+                                                'document'     => $this->player->document,
                                                 'shirt_number' => 14,
                                            ])
              ->assertStatus(200)
              ->assertExactJson([
                           'name'         => 'test 2',
-                          'document'     => $firstPlayer->document,
+                          'document'     => $this->player->document,
                           'shirt_number' => 14,
-                          'team'         => $firstPlayer->team,
+                          'team'         => $this->player->team,
                           'id'           => 1
                     ]);
     }

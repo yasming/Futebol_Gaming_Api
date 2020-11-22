@@ -11,18 +11,21 @@ class MatchTeamModelTest extends TestCase
 {
     use DatabaseMigrations;
 
+    private $team;
     public function setUp(): void
     {
         parent::setUp();
         $this->seed();
+        $this->team = Team::first();
+        $this->team->update(['name' => 'test']);
     }
 
     public function test_get_ranking_teams()
     {
-        $team       = Team::first();
-        $matchTeams = MatchTeam::getRankingTeams($team->name);
+        
+        $matchTeams = MatchTeam::getRankingTeams($this->team->name);
         $this->assertEquals(count($matchTeams),1);
-        $this->assertEquals($matchTeams->first()->name,$team->name);
+        $this->assertEquals($matchTeams->first()->name,$this->team->name);
 
         $matchTeams = MatchTeam::getRankingTeams();
         $this->assertEquals(count($matchTeams), count(

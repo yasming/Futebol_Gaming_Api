@@ -11,19 +11,22 @@ class CardMatchModelTest extends TestCase
 {
     use DatabaseMigrations;
 
+    private $player;
     public function setUp(): void
     {
         parent::setUp();
         $this->seed();
+        $this->player  = Player::first();
+        $this->player->update(['name' => 'test']);
     }
 
     public function test_get_ranking_of_players()
     {
-        $player       = Player::first();
-        $cardMatches  = CardMatch::getRankingPlayers($player->name);
+       
+        $cardMatches  = CardMatch::getRankingPlayers($this->player->name);
 
         $this->assertEquals(count($cardMatches),1);
-        $this->assertEquals($cardMatches->first()->name,$player->name);
+        $this->assertEquals($cardMatches->first()->name,$this->player->name);
 
         $cardMatches = CardMatch::getRankingPlayers();
         $this->assertEquals(count($cardMatches), count(
