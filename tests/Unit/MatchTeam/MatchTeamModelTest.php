@@ -35,5 +35,4 @@ class MatchTeamModelTest extends TestCase
         $this->assertEquals($matchTeams->first()->ranking_position,1);
 
     }
-  
 }
