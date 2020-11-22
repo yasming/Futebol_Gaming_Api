@@ -14,7 +14,7 @@ class TeamController extends Controller
     {
         return response()->json(
             [
-                'teams' => new TeamResourceCollection(Team::all()->load('players'))
+                'teams' => new TeamResourceCollection(Team::getAllTeamsWithPlayers(request()->query('name')))
             ],200);
     }
 

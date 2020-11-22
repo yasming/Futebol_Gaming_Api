@@ -13,7 +13,7 @@ class RankingController extends Controller
     {
         return response()->json(
             [
-                'ranking' => new RankingResourceCollection(MatchTeam::getRankingTeams())
+                'ranking' => new RankingResourceCollection(MatchTeam::getRankingTeams(request()->query('name')))
             ],200);
     }
 
@@ -21,7 +21,7 @@ class RankingController extends Controller
     {
         return response()->json(
             [
-                'ranking' => new RankingResourceCollection(CardMatch::getRankingPlayers())
+                'ranking' => new RankingResourceCollection(CardMatch::getRankingPlayers(request()->query('name')))
             ],200);
     }
 }

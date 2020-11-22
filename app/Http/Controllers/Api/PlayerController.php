@@ -13,7 +13,7 @@ class PlayerController extends Controller
     {
         return response()->json(
             [
-                'players' => new PlayerResourceCollection(Player::all()->load('team'))
+                'players' => new PlayerResourceCollection(Player::getAllPlayersWithTeam(request()->query('name')))
             ],200);
     }
 
