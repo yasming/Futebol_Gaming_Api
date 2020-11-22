@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Collections\CardMatchCollection;
 
 class CardMatch extends Model
 {
@@ -20,6 +21,12 @@ class CardMatch extends Model
                       ->join('players','players.id','card_match.player_id')
                       ->selectRaw('players.name as name, SUM(cards.points) as points')
                       ->orderBy('points', 'asc')
-                      ->get();
+                      ->get()
+                      ->addRankingPosition();
+    }
+
+    public function newCollection(array $models = [])
+    {
+        return new CardMatchCollection($models);
     }
 }

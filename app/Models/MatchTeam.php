@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Collections\MatchTeamCollection;
 
 class MatchTeam extends Model
 {
@@ -19,6 +20,12 @@ class MatchTeam extends Model
                       ->join('teams','teams.id','match_team.team_id')
                       ->selectRaw('teams.name as name, SUM(gols) as gols')
                       ->orderBy('gols', 'desc')
-                      ->get();
+                      ->get()
+                      ->addRankingPosition();
+    }
+
+    public function newCollection(array $models = [])
+    {
+        return new MatchTeamCollection($models);
     }
 }
