@@ -21,7 +21,6 @@ class MatchTeamModelTest extends TestCase
     {
         $team       = Team::first();
         $matchTeams = MatchTeam::getRankingTeams($team->name);
-
         $this->assertEquals(count($matchTeams),1);
         $this->assertEquals($matchTeams->first()->name,$team->name);
 

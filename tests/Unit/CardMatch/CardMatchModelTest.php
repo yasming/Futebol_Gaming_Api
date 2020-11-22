@@ -37,5 +37,4 @@ class CardMatchModelTest extends TestCase
         $this->assertEquals($cardMatches->first()->ranking_position,1);
 
     }
-  
 }

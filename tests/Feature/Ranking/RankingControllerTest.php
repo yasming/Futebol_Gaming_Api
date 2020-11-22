@@ -18,7 +18,6 @@ class RankingControllerTest extends TestCase
     {
         parent::setUp();
         $this->seed();
-        $this->withExceptionHandling();
         $response = $this->post('/api/login', [
             'email'    => 'email@example.com', 
             'password' => 'password'
@@ -52,7 +51,7 @@ class RankingControllerTest extends TestCase
         $this->assertEquals($rankingTeams->response()->getData(true)['data'],$response['ranking']);
     }
 
-    public function test_it_shoul_be_able_to_search_a_player_in_the_ranking()
+    public function test_it_should_be_able_to_search_a_player_in_the_ranking()
     {
         $player       = Player::first();
         $rankingTeams = new RankingResourceCollection(CardMatch::getRankingPlayers($player->name));

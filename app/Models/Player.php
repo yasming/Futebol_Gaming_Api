@@ -34,7 +34,7 @@ class Player extends Model
                         ->get();
     }
 
-    public function scopeGetPlayersThatBelongsToOthersTeam($query,$value,$teamId)
+    public function scopeGetPlayersThatBelongsToOthersTeam($query,$value,$teamId = null)
     {
         return  $query->whereIn('id', $value)
                       ->when($teamId != null, function($query) use($teamId){
