@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\MatchResource;
+use App\Http\Resources\Matches\MatchResource;
 use App\Http\Requests\StoreMatchRequest;
 use App\Models\Match;
 class MatchController extends Controller

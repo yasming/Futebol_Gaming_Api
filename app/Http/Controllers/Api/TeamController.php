@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TeamResource;
-use App\Http\Resources\TeamResourceCollection;
+use App\Http\Resources\Teams\TeamResource;
+use App\Http\Resources\Teams\TeamResourceCollection;
 use App\Http\Requests\StoreTeamRequest;
 use App\Models\Team;
 use App\Models\Player;

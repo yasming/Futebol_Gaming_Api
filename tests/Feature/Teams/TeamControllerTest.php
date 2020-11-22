@@ -3,7 +3,7 @@
 namespace Tests\Feature\Teams;
 
 use Tests\TestCase;
-use App\Http\Resources\TeamResourceCollection;
+use App\Http\Resources\Teams\TeamResourceCollection;
 use App\Models\Team;
 use App\Models\Player;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

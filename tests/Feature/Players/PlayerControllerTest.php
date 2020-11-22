@@ -3,7 +3,7 @@
 namespace Tests\Feature\Players;
 
 use Tests\TestCase;
-use App\Http\Resources\PlayerResourceCollection;
+use App\Http\Resources\Players\PlayerResourceCollection;
 use App\Models\Player;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 class PlayerControllerTest extends TestCase

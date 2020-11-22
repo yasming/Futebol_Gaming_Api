@@ -15,8 +15,8 @@ class CreateMatchTeamTable extends Migration
     {
         Schema::create('match_team', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('team_id')->constraints();
-            $table->foreignId('match_id')->constraints();
+            $table->foreignId('team_id')->constrained();
+            $table->foreignId('match_id')->constrained();
             $table->smallInteger('gols');
         });
     }

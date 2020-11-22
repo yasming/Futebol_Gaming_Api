@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePlayerRequest;
-use App\Http\Resources\PlayerResource;
-use App\Http\Resources\PlayerResourceCollection;
+use App\Http\Resources\Players\PlayerResource;
+use App\Http\Resources\Players\PlayerResourceCollection;
 use App\Models\Player;
 class PlayerController extends Controller
 {

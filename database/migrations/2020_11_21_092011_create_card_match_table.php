@@ -15,9 +15,9 @@ class CreateCardMatchTable extends Migration
     {
         Schema::create('card_match', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('card_id')->constraints();
-            $table->foreignId('match_id')->constraints();
-            $table->foreignId('player_id')->constraints();
+            $table->foreignId('card_id')->constrained();
+            $table->foreignId('match_id')->constrained();
+            $table->foreignId('player_id')->constrained();
             $table->timestamps();
         });
     }

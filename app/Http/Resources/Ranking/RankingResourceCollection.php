@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Ranking;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class TeamResourceCollection extends ResourceCollection
+class RankingResourceCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
