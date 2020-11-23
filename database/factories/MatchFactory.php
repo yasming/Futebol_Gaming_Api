@@ -23,7 +23,7 @@ class MatchFactory extends Factory
     public function definition()
     {
         return [
-            'date'       => Carbon::parse($this->faker->date)->format('d/m/Y'),
+            'date'       => '20/10/2020',
             'start_time' => $this->faker->time,
             'end_time'   => $this->faker->time,
         ];

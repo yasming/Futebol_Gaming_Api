@@ -12,7 +12,7 @@ class TeamFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => 'janedoe'.rand(1,9999),
         ];
     }
 }
