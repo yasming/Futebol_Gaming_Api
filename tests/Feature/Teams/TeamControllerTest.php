@@ -52,7 +52,8 @@ class TeamControllerTest extends TestCase
              ->json('POST', '/api/teams')
              ->assertStatus(422)
              ->assertExactJson([
-                            'name'         => ['The name field is required.'],
+                            'name'        => ['The name field is required.'],
+                            'players_ids' => ['The players ids field is required.'],
                           ]);
 
         $this->withHeaders(['Authorization' => "Bearer ".$this->token])
@@ -125,7 +126,8 @@ class TeamControllerTest extends TestCase
              ->json('PUT', '/api/teams/1')
              ->assertStatus(422)
              ->assertExactJson([
-                            'name'         => ['The name field is required.'],
+                            'name'        => ['The name field is required.'],
+                            'players_ids' => ['The players ids field is required.'],
                           ]);
 
         $this->withHeaders(['Authorization' => "Bearer ".$this->token])
