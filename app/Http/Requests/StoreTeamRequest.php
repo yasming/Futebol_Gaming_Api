@@ -21,7 +21,7 @@ class StoreTeamRequest extends FormRequest
         if($this->getMethod() == 'PUT') $teamId = request()->route('team')->id; 
         return [
             'name'          => 'required|string', 
-            'players_ids'   => ['bail','array','max:5' , new CheckIfPlayersBelongsToOtherTeamRule($teamId)],
+            'players_ids'   => ['bail','required' ,'array','max:5' , new CheckIfPlayersBelongsToOtherTeamRule($teamId)],
             'players_ids.*' => 'integer',
         ];
     }
