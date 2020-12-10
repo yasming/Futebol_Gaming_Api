@@ -1,6 +1,6 @@
 # Futebol_Gaming_Api
 
-This project is an api to do the managment of a futebol championship. We can add players, teams, matches and get the ranking of teams(by the gols done) and players(by the cards taken, that one that get less card is the winner). A importante thing about this championship is: once a player is added to a team, he can't change to other team, but is possible to update all the others informations from players !
+This project is an api to do the managment of a futebol championship. We can add players, teams, matches and get the ranking of teams(by the gols done) and players(by the cards taken, that one that get less card is the winner). An important thing about this championship is: once a player is added to a team, he can't change to other team, but is possible to update all the others informations from players and make searches!
 
 ## Prerequisites
 
